@@ -2,10 +2,8 @@
 import { ref, computed } from 'vue'
 
 const TOKEN_ID = '1c5ac405-1919-0ac1-e063-63199f0ac402'
-const TOKEN_KEY =
-  'MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAKj15ikj3q4kNESLkfLrJzGAOFsiScOw3iByTrhj8+c3HAnIGMZ9m+lQFUkfBOuTOdgNQdyA8ReoQniKKWZM63sCAwEAAQ=='
-const ACCESS_TOKEN =
-  'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxYzVhYzI3Yy05OGM3LTFhMzktZTA2My02MzE5OWYwYTkyOWQiLCJhdWQiOlsicmVzdHNlcnZpY2UiXSwidXNlcl9uYW1lIjoiaG9hbmdhYXRyb3gyMzUwNEBnbWFpbC5jb20iLCJzY29wZSI6WyJyZWFkIl0sImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0IiwibmFtZSI6ImhvYW5nYWF0cm94MjM1MDRAZ21haWwuY29tIiwidXVpZF9hY2NvdW50IjoiMWM1YWMyN2MtOThjNy0xYTM5LWUwNjMtNjMxOTlmMGE5MjlkIiwiYXV0aG9yaXRpZXMiOlsiVVNFUiJdLCJqdGkiOiI1NjA3OGYyYi03NjgzLTRmMDItOTlhOC1jODQ2NzVhYTc1ODIiLCJjbGllbnRfaWQiOiJhZG1pbmFwcCJ9.1i3TXpOJiCMnu3OXFZVYkL7X6N8qC7AwBlevX5JRS6HWICkKraCoC_IIBx3IblL3nRCFIi9q0TGwQeoSuvXExaTUN2VygEL89qCocojVJvSEermeEoLNVvBpnSjb-MrraCLuCJPX5jvk3yYkZm3LC2mNNnc8AeT5c0oZAxyL6tRLArm_f7AVGkfJpMKWz2J0Q4MEmxiV0QxvoZeRMbTf_LTPnkxOrqp5l2iRh5BQ0YfD5nJEFrmgmwPEP8NVXVuoVzca84oWzJAEHUII9Xv4LEZvxf4HliRwZZFlZAq8vxRv25uaNRJVpgMj2Yw442X41UVc33UUJIHveeXKFZdm_g'
+const TOKEN_KEY = 'MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAKj15ikj3q4kNESLkfLrJzGAOFsiScOw3iByTrhj8+c3HAnIGMZ9m+lQFUkfBOuTOdgNQdyA8ReoQniKKWZM63sCAwEAAQ=='
+const ACCESS_TOKEN = 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxYzVhYzI3Yy05OGM3LTFhMzktZTA2My02MzE5OWYwYTkyOWQiLCJhdWQiOlsicmVzdHNlcnZpY2UiXSwidXNlcl9uYW1lIjoiaG9hbmdhYXRyb3gyMzUwNEBnbWFpbC5jb20iLCJzY29wZSI6WyJyZWFkIl0sImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0IiwibmFtZSI6ImhvYW5nYWF0cm94MjM1MDRAZ21haWwuY29tIiwidXVpZF9hY2NvdW50IjoiMWM1YWMyN2MtOThjNy0xYTM5LWUwNjMtNjMxOTlmMGE5MjlkIiwiYXV0aG9yaXRpZXMiOlsiVVNFUiJdLCJqdGkiOiI1NjA3OGYyYi03NjgzLTRmMDItOTlhOC1jODQ2NzVhYTc1ODIiLCJjbGllbnRfaWQiOiJhZG1pbmFwcCJ9.1i3TXpOJiCMnu3OXFZVYkL7X6N8qC7AwBlevX5JRS6HWICkKraCoC_IIBx3IblL3nRCFIi9q0TGwQeoSuvXExaTUN2VygEL89qCocojVJvSEermeEoLNVvBpnSjb-MrraCLuCJPX5jvk3yYkZm3LC2mNNnc8AeT5c0oZAxyL6tRLArm_f7AVGkfJpMKWz2J0Q4MEmxiV0QxvoZeRMbTf_LTPnkxOrqp5l2iRh5BQ0YfD5nJEFrmgmwPEP8NVXVuoVzca84oWzJAEHUII9Xv4LEZvxf4HliRwZZFlZAq8vxRv25uaNRJVpgMj2Yw442X41UVc33UUJIHveeXKFZdm_g'
 
 const API_URL = 'https://api.idg.vnpt.vn/tts-service/v2/grpc'
 
@@ -16,25 +14,25 @@ const callTtsApi = async (text, region, speed) => {
     'Token-id': TOKEN_ID,
     'Token-key': TOKEN_KEY
   }
-
+  
+  // Kiểm tra headers
   console.log('Request headers:', headers)
-  console.log('Request body:', {
+  
+  const requestBody = JSON.stringify({
     text,
     region,
     speed,
     text_split: false
   })
+  
+  // Kiểm tra request body
+  console.log('Request body:', requestBody)
 
   try {
     const response = await fetch(API_URL, {
       method: 'POST',
       headers: headers,
-      body: JSON.stringify({
-        text,
-        region,
-        speed,
-        text_split: false
-      })
+      body: requestBody
     })
 
     if (!response.ok) {
@@ -76,9 +74,7 @@ const handleTtsConversion = async () => {
     audioSrc.value = data.object?.playlist?.[0]?.audio_link || ''
   } catch (error) {
     console.error('Không thể chuyển đổi văn bản thành giọng nói:', error)
-    responseData.value = {
-      error: 'Không thể chuyển đổi văn bản thành giọng nói. Vui lòng thử lại.'
-    }
+    responseData.value = { error: 'Không thể chuyển đổi văn bản thành giọng nói. Vui lòng thử lại.' }
   } finally {
     isLoading.value = false
   }
