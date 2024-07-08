@@ -64,15 +64,16 @@ const handleTtsConversion = async () => {
 </script>
 
 <template>
-  <main>
-    <div>
+  <main class="container">
+    <div class="input-container">
+      <label for="">Văn bản muốn chuyển đổi:</label>
       <textarea
         v-model="inputText"
         placeholder="Nhập văn bản để chuyển đổi thành giọng nói"
-        rows="4"
+        rows="5"
         cols="50"
       ></textarea>
-      <br />
+      <label for="">Chọn giọng đọc:</label>
       <select v-model="selectedRegion">
         <option value="female_north">Nữ Bắc</option>
         <option value="female_central">Nữ Trung</option>
@@ -81,11 +82,12 @@ const handleTtsConversion = async () => {
         <option value="male_central">Nam Trung</option>
         <option value="male_south">Nam Nam</option>
       </select>
+      <label for="">Chọn tốc độ:</label>
       <input type="number" v-model.number="selectedSpeed" step="0.1" min="0.1" max="2.0" />
       <button @click="handleTtsConversion">Chuyển đổi thành giọng nói</button>
     </div>
-    <div v-if="responseData">
-      <h2>Result:</h2>
+    <div class="result-container">
+      <h2>Kết quả:</h2>
       <pre>{{ JSON.stringify(responseData, null, 2) }}</pre>
       <div v-if="audioSrc">
         <h3>Âm thanh đã tạo:</h3>
@@ -94,3 +96,73 @@ const handleTtsConversion = async () => {
     </div>
   </main>
 </template>
+
+<style>
+* {
+  font-family: 'Be Vietnam Pro';
+}
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.input-container,
+.result-container {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-right: 1px solid #ccc;
+}
+
+textarea {
+  width: 100%;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: vertical;
+  outline: 1px solid #d9d9d9;
+}
+
+select,
+input[type='number'],
+button,
+input[type='text'] {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: 1px solid #d9d9d9;
+}
+
+button {
+  background-color: #0c61a1;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+button:hover {
+  filter: brightness(1.2);
+}
+
+.result-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f9f9f9;
+}
+
+audio {
+  width: 100%;
+  margin-top: 10px;
+}
+</style>
